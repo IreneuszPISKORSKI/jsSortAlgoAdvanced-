@@ -61,8 +61,24 @@ function getArrayCsv(csv) {
  * @returns la distance qui sépare la ville de Grenoble
  */
 function distanceFromGrenoble(ville) {
-    console.log('implement me !');
-    return 0;
+    let lat2 = ville.latitude;
+    let lon2 = ville.longitude;
+    let lat1 = 45.188529;
+    let lon1 = 5.724524;
+    const R = 6371e3; // metres
+    const φ1 = lat1 * Math.PI/180; // φ, λ in radians
+    const φ2 = lat2 * Math.PI/180;
+    const Δφ = (lat2-lat1) * Math.PI/180;
+    const Δλ = (lon2-lon1) * Math.PI/180;
+
+const a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
+          Math.cos(φ1) * Math.cos(φ2) *
+          Math.sin(Δλ/2) * Math.sin(Δλ/2);
+const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+const d = R * c; // in metres
+    console.log('Dist ok!');
+    return d;
 }
 
 /**
@@ -73,8 +89,14 @@ function distanceFromGrenoble(ville) {
  * @return vrai si la ville i est plus proche
  */
 function isLess(i, j) {
-    console.log('implement me !');
-    return true;
+    console.log('Is less - ok!');
+    // if (listVille[i]<listVille[j]){
+    //     return true;
+    // }else{
+    //     return false;
+    // }
+    return listVille[i].distanceFromGrenoble<listVille[j].distanceFromGrenoble?true:false;
+
 }
 
 /**
@@ -83,7 +105,10 @@ function isLess(i, j) {
  * @param {*} j 
  */
 function swap(i, j) {
-    console.log('implement me !');
+    temp = listVille[i];
+    listVille[i] = listVille[j];
+    listVille[j] = temp;
+    console.log('Swap - ok!');
 }
 
 function sort(type) {
@@ -113,7 +138,14 @@ function sort(type) {
 }
 
 function insertsort() {
-    console.log("insertsort - implement me !");
+    for (let i=1; i<listVille.length; i++){
+        for (let j=i;j>=1;j--){
+            if (listVille[j].distanceFromGrenoble < listVille[j-1].distanceFromGrenoble){
+                swap(j, j-1);
+            }
+        }
+    }
+    console.log("Insertsort - ok!");
 }
 
 function selectionsort() {
