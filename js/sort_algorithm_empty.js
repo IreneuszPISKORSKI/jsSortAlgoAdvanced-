@@ -46,9 +46,23 @@ function bubbleSort(inputArr) {
                 test++;
             }
         }
-    }while(test<inputArr.length-1)
+    }while(test<inputArr.length-1);
     console.log("Bubble - ok!");
     return inputArr;
+}
+
+function bubbleSort2(inputArr){
+    let permut = true;
+    while(permut){
+        permut=false;
+        for(let i=0; i<inputArr.length-1; i++){
+            if(inputArr[i]>inputArr[i+1]){
+                swap(inputArr, i, i+1);
+                permut=true;
+            }
+        }
+    }
+    console.log("Bubble2 - ok!");
 }
 
 function shellSort(inputArr) {
@@ -81,7 +95,7 @@ function tasSort(inputArr) {
         swap(inputArr, 0, i);
         redescendre(inputArr, i, 0)
     }
-    console.log("Tas - im on it");
+    console.log("Tas - ok!");
     return inputArr;
 }
 
@@ -115,6 +129,18 @@ function redescendre(array, element, index){
     }
 }
 
+function irekTest(array){
+    for(i=0; i<array.length-1; i++){
+        for(j=array.length-1; j>i; j--){
+            if (array[i]>array[j]){
+                swap(array, i , j);
+            }
+        }
+    }
+    console.log("Irek - ok!");
+    return array;
+}
+
 //////////////////////////////////////////////////////////
 //                          START                       //
 //////////////////////////////////////////////////////////
@@ -122,7 +148,7 @@ function redescendre(array, element, index){
 // Création de list
 
 var list = [];
-let size = 200;
+let size = 20000;
 for (let i = 0; i < size; i++) {
     list.push(Math.floor(Math.random() * size * 2));
 }
@@ -141,6 +167,10 @@ console.time("bubble");
 var bubbleList = bubbleSort([...list]);
 console.timeEnd("bubble");
 
+console.time("bubble2");
+var bubbleList2 = bubbleSort2([...list]);
+console.timeEnd("bubble2");
+
 console.time("shell");
 var shellList = shellSort([...list]);
 console.timeEnd("shell");
@@ -148,6 +178,10 @@ console.timeEnd("shell");
 console.time("tas");
 var tasList = tasSort([...list], 0, list.length);
 console.timeEnd("tas");
+
+console.time("Irek");
+var irekList = irekTest([...list]);
+console.timeEnd("Irek");
 
 // Affichage des résultats
 
@@ -164,6 +198,10 @@ console.log("Bubble");
 console.log(list);
 console.log(bubbleList);
 console.log(" ");
+console.log("Bubble2");
+console.log(list);
+console.log(bubbleList2);
+console.log(" ");
 console.log("Shell");
 console.log(list);
 console.log(shellList);
@@ -171,3 +209,7 @@ console.log(" ");
 console.log("Tas");
 console.log(list);
 console.log(tasList);
+console.log(" ");
+console.log("Irek");
+console.log(list);
+console.log(irekList);
