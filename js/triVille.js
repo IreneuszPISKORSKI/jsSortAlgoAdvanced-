@@ -127,13 +127,13 @@ function sort(type) {
             shellsort();
             break;
         case 'merge':
-            mergesort();
+            listVille = mergesort(listVille);
             break;
         case 'heap':
             heapsort();
             break;
         case 'quick':
-            quicksort();
+            quicksort(0, listVille.length-1);
             break;
         case 'tas':
             tasSort();
@@ -270,14 +270,60 @@ function redescendre(element, index){
 }
 
 
-function mergesort() {
-    console.log("mergesort - implement me !");
+function mergesort(array) {
+    if(array.length <= 1){
+        return array;
+    }else{
+        let middle = Math.floor(array.length/2);
+        console.log(middle);
+        let left = array.slice(0, middle);
+        let right = array.slice(middle);
+        return fusion(mergesort(left), mergesort(right));
+    }
 }
 
-
-function quicksort() {
-    console.log("quicksort - implement me !");
+function fusion(arraya, arrayb){
+    if(arraya.length == 0){
+        console.log("a=0");
+        return arrayb;
+    }
+    if(arrayb.length == 0){
+        console.log("b=0");
+        return arraya;
+    }
+    if(arraya[0].distanceFromGrenoble<=arrayb[0].distanceFromGrenoble){
+        let temp = [];
+        temp[0] = arraya.shift();
+        return temp.concat(fusion(arraya, arrayb));
+    }else{
+        let temp = [];
+        temp[0] = arrayb.shift();
+        return temp.concat(fusion(arraya, arrayb));
+    }
 }
+
+function quicksort(first, last) {
+    console.log("first: " + first + ", last: " + last);
+    if(first<last){
+        let rapide = division(first, last);
+        quicksort(first, rapide-1);
+        quicksort(rapide+1, last);
+    }
+}
+
+function division(first, last){
+    let pivot = last;
+    let j = first;
+    for(let i=first; i<last; i++){
+        if(listVille[i].distanceFromGrenoble<=listVille[pivot].distanceFromGrenoble){
+            swap(i,j);
+            j=j+1;
+        }
+    }
+    swap(last, j);
+    return j;
+}
+
 
 /** MODEL */
 
